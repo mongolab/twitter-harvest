@@ -14,6 +14,9 @@ lib/bson/py3compat.py
 lib/bson/son.py
 lib/bson/timestamp.py
 lib/bson/tz_util.py
+lib/httplib2/__init__.py
+lib/httplib2/iri2uri.py
+lib/httplib2/socks.py
 lib/oauth2/__init__.py
 lib/oauth2/_version.py
 lib/pymongo/__init__.py
