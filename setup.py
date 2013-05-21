@@ -6,7 +6,6 @@ setup(
         description='Twitter User Timeline Harvest',
         author='Mongolab',
         author_email='support@mongolab.com',
-        package_dir={'pymongo':'lib',
-                    'oauth2':'lib'
-                    }
+        package_dir={'':'lib'},
+        packages=['pymongo', 'oauth2']
     )
