@@ -7,5 +7,5 @@ setup(
         author='Mongolab',
         author_email='support@mongolab.com',
         package_dir={'':'lib'},
-        packages=['pymongo', 'oauth2']
+        packages=['pymongo', 'oauth2', 'bson']
     )
