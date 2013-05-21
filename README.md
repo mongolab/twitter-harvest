@@ -9,9 +9,8 @@ Compatible with Python 2.7.x
 
 Run:
 
-python setup.py install
-
-python harvest.py your args here
+    python setup.py install
+    python harvest.py your args here
 
 
 Twitter App Setup
