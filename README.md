@@ -3,7 +3,7 @@ Harvest
 
 Tutorial for harvesting Twitter user timelines. Allow developers interested in learning more about MongoDB to populate their database with some easily accessible data.
 
-This tutorial uses the "save" method for handling documents (essentially an "upsert"). Pymongo documentation [here](http://api.mongodb.org/python/current/api/pymongo/collection.html). For those unfamiliar with "upserts", MongoDB upsert documentation [here](http://docs.mongodb.org/manual/applications/update/update-operations-with-the-upsert-flag).
+This tutorial uses the "save" method for handling documents (essentially an "upsert"). Pymongo documentation [here](http://api.mongodb.org/python/current/api/pymongo/collection.html). For those unfamiliar with "upserts", MongoDB upsert documentation [here](http://docs.mongodb.org/manual/core/update/#update-operations-with-the-upsert-flag).
 
 Compatible with Python 2.7.x
 
