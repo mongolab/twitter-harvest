@@ -68,7 +68,7 @@ def main(argv):
         request = urllib2.Request(url, headers = headers)
         f = urllib2.urlopen(request)
         tweets = json.load(f)
-        if tweets.get('errors'):
+        if 'errors' in tweets:
             print 'Hit rate limit, code: %s, message: %s' % (tweets['errors']['code'], tweets['errors']['message'])
             sys.exit()
         max_id = -1
