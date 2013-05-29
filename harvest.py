@@ -6,7 +6,7 @@ __author__ = 'chris chang'
 import pymongo
 import oauth2 as oauth
 import urllib2, json
-import sys, getopt, time 
+import sys, argparse, time 
 
 def oauth_header(url, consumer, token):
     params =  {'oauth_version': '1.0',
@@ -16,41 +16,22 @@ def oauth_header(url, consumer, token):
     req = oauth.Request(method = 'GET',url = url, parameters = params)
     req.sign_request(oauth.SignatureMethod_HMAC_SHA1(),consumer, token)
     head = req.to_header()['Authorization'].encode('utf-8')
-    #print head
     return head
 
-def main(argv):
-    try:
-        opts, args = getopt.getopt(argv, "hu:c:r:",["help", "username"]) 
-    except getopt.GetoptError:
-        print 'getOpt error'
-        sys.exit(2)
+def main():
+    #Parse Argument Fields
+    parser = argparse.ArgumentParser(
+        description = 'Twitter User Timeline Harvest')
+    parser.add_argument('-c', help = 'sets the count or number of tweets to be returned per request. max = 200', default = '200')
+    parser.add_argument('-u', help = 'choose username timeline you are interested in harvesting. no @ symbol', default = 'mongolab')
+    parser.add_argument('-r', help = 'set whether you want retweets (true) or only self tweets (false)', default = 'true')
+    args = parser.parse_args()
 
     #Fields for query:
-    username = 'mongolab'
-    count = '200'
-    retweet = 'true'
+    username = args.u 
+    count = args.c 
+    retweet = args.r 
 
-    for o, a in opts:
-        if o in ("-h", "--help"):
-            #usage()
-            sys.exit()
-        elif o in ("-u", "--username"):
-            username = a
-        elif o in ("-c"):
-            count = a
-        elif o in ("-r"):
-            retweet = a
-        else:
-            assert False, "unhandled option"
-
-    URI = raw_input("Enter your MongoLab URI: ")
-    conn = pymongo.MongoClient(URI)
-    uri_parts = pymongo.uri_parser.parse_uri(URI)
-    db_name = uri_parts['database']
-    db = conn[db_name]
-    db.Harvest.ensure_index("id_str", unique = True)
-    
     #Build Signature
     base_url = "https://api.twitter.com/1.1/statuses/user_timeline.json?include_entities=true&screen_name=%s&count=%s&include_rts=%s" % (username, count, retweet)
     url = base_url 
@@ -60,9 +41,18 @@ def main(argv):
     TOKEN_SECRET = raw_input("Enter Access Secret: ")
     oauth_consumer = oauth.Consumer(key = CONSUMER, secret = CONSUMER_SECRET)
     oauth_token = oauth.Token(key = TOKEN, secret = TOKEN_SECRET)
-   
-    stop = False
-    while True:
+ 
+    #Setup MongoLab Goodness
+    URI = raw_input("Enter your MongoLab URI: ")
+    conn = pymongo.MongoClient(URI)
+    uri_parts = pymongo.uri_parser.parse_uri(URI)
+    db_name = uri_parts['database']
+    db = conn[db_name]
+    db.Harvest.ensure_index("id_str", unique = True)
+    
+    #Begin Harvesting
+    loop = True 
+    while loop:
         auth = oauth_header(url, oauth_consumer, oauth_token)
         headers = {"Authorization": auth}
         request = urllib2.Request(url, headers = headers)
@@ -74,31 +64,28 @@ def main(argv):
         max_id = -1
         dupCount = 0
         for tweet in tweets:
-            print tweet['text']
-            print tweet['id_str']
             id_str = tweet["id_str"]
             if max_id == -1 or max_id > id_str:
                 max_id = id_str
             elif max_id == id_str:
-                stop = True
+                loop = False 
                 break
             try:
+                print tweet['text']
                 db.Harvest.save(tweet)
             except pymongo.errors.DuplicateKeyError:
-                print "Duplicate Tweet"
                 dupCount += 1 
                 if dupCount > 5:
-                    stop = True
+                    loop = False 
                     print 'Hit Max Tweets'
                     break
                 continue
-        if stop:
-            break
+        #Continue Harvesting for older Tweets. Max 3200
         url = base_url + "&max_id=" + max_id
 
 if __name__ == '__main__':
     try:
-        main(sys.argv[1:])
+        main()
     except SystemExit as e:
         if e.code == 0:
             pass
