@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 setup(
         name='Harvest',
@@ -7,7 +7,7 @@ setup(
         author='The MongoLab Team',
         author_email='team@mongolab.com',
         url='https://github.com/c2chang/twitter-harvest',
-        install_requires=['pymongo','oauth2','bson','httplib2']
+        install_requires=['pymongo','oauth2','bson','httplib2', 'py3compat']
     )
 
 #package_dir={'':'lib'},
