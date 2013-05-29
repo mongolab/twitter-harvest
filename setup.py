@@ -10,5 +10,3 @@ setup(
         install_requires=['pymongo','oauth2','httplib2']
     )
 
-#package_dir={'':'lib'},
-#packages=['pymongo', 'oauth2', 'bson', 'httplib2']
