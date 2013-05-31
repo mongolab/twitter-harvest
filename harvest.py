@@ -25,6 +25,7 @@ def main():
     parser.add_argument('-c', help = 'sets the count or number of tweets to be returned per request. max = 200', default = '200')
     parser.add_argument('-u', help = 'choose username timeline you are interested in harvesting. no @ symbol', default = 'mongolab')
     parser.add_argument('-r', help = 'set whether you want retweets (true) or only self tweets (false)', default = 'true')
+    parser.add_arugment('--uri', help = 'MongoLab URI, example: mongodb://dbuser:dbpassword@dbh85.mongolab.com:port/dbname', required = True)
     parser.add_argument('--consumer-key', help = 'Consumer Key from your Twitter App OAuth settings', required = True)
     parser.add_argument('--consumer-secret', help = 'Consumer Secret from your Twitter App OAuth settings', required = True)
     parser.add_argument('--access-token', help = 'Access Token from your Twitter App OAuth settings', required = True)
@@ -39,18 +40,18 @@ def main():
     retweet = args.r 
     
     #Build Signature
-    CONSUMER_KEY = args.consumer-key
-    CONSUMER_SECRET = args.consumer-secret
-    ACCESS_TOKEN = args.access-token
-    ACCESS_SECRET = args.access-secret
-    
+    CONSUMER_KEY = args.consumer_key
+    CONSUMER_SECRET = args.consumer_secret
+    ACCESS_TOKEN = args.access_token
+    ACCESS_SECRET = args.access_secret
+
     base_url = "https://api.twitter.com/1.1/statuses/user_timeline.json?include_entities=true&screen_name=%s&count=%s&include_rts=%s" % (username, count, retweet)
     url = base_url 
     oauth_consumer = oauth.Consumer(key = CONSUMER_KEY, secret = CONSUMER_SECRET)
     oauth_token = oauth.Token(key = ACCESS_TOKEN, secret = ACCESS_SECRET)
  
     #Setup MongoLab Goodness
-    URI = raw_input("Enter your MongoLab URI: ")
+    URI = args.uri 
     conn = pymongo.MongoClient(URI)
     uri_parts = pymongo.uri_parser.parse_uri(URI)
     db_name = uri_parts['database']
