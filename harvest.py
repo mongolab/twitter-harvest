@@ -25,7 +25,7 @@ def main():
     parser.add_argument('-c', help = 'sets the count or number of tweets to be returned per request. max = 200', default = '200')
     parser.add_argument('-u', help = 'choose username timeline you are interested in harvesting. no @ symbol', default = 'mongolab')
     parser.add_argument('-r', help = 'set whether you want retweets (true) or only self tweets (false)', default = 'true')
-    parser.add_arugment('--uri', help = 'MongoLab URI, example: mongodb://dbuser:dbpassword@dbh85.mongolab.com:port/dbname', required = True)
+    parser.add_argument('--uri', help = 'MongoLab URI, example: mongodb://dbuser:dbpassword@dbh85.mongolab.com:port/dbname', required = True)
     parser.add_argument('--consumer-key', help = 'Consumer Key from your Twitter App OAuth settings', required = True)
     parser.add_argument('--consumer-secret', help = 'Consumer Secret from your Twitter App OAuth settings', required = True)
     parser.add_argument('--access-token', help = 'Access Token from your Twitter App OAuth settings', required = True)
