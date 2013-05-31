@@ -25,22 +25,29 @@ def main():
     parser.add_argument('-c', help = 'sets the count or number of tweets to be returned per request. max = 200', default = '200')
     parser.add_argument('-u', help = 'choose username timeline you are interested in harvesting. no @ symbol', default = 'mongolab')
     parser.add_argument('-r', help = 'set whether you want retweets (true) or only self tweets (false)', default = 'true')
+    parser.add_argument('--consumer-key', help = 'Consumer Key from your Twitter App OAuth settings', required = True)
+    parser.add_argument('--consumer-secret', help = 'Consumer Secret from your Twitter App OAuth settings', required = True)
+    parser.add_argument('--access-token', help = 'Access Token from your Twitter App OAuth settings', required = True)
+    parser.add_argument('--access-secret', help = 'Access Token Secret from your Twitter App Dev Credentials', required = True)
+
     args = parser.parse_args()
 
     #Fields for query:
+    
     username = args.u 
     count = args.c 
     retweet = args.r 
-
+    
     #Build Signature
+    CONSUMER_KEY = args.consumer-key
+    CONSUMER_SECRET = args.consumer-secret
+    ACCESS_TOKEN = args.access-token
+    ACCESS_SECRET = args.access-secret
+    
     base_url = "https://api.twitter.com/1.1/statuses/user_timeline.json?include_entities=true&screen_name=%s&count=%s&include_rts=%s" % (username, count, retweet)
     url = base_url 
-    CONSUMER = raw_input("Enter your Consumer Key: ")
-    CONSUMER_SECRET = raw_input("Enter your Consumer Secret: ")
-    TOKEN = raw_input("Enter your Access Token: ")
-    TOKEN_SECRET = raw_input("Enter Access Secret: ")
-    oauth_consumer = oauth.Consumer(key = CONSUMER, secret = CONSUMER_SECRET)
-    oauth_token = oauth.Token(key = TOKEN, secret = TOKEN_SECRET)
+    oauth_consumer = oauth.Consumer(key = CONSUMER_KEY, secret = CONSUMER_SECRET)
+    oauth_token = oauth.Token(key = ACCESS_TOKEN, secret = ACCESS_SECRET)
  
     #Setup MongoLab Goodness
     URI = raw_input("Enter your MongoLab URI: ")
