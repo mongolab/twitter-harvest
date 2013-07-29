@@ -25,7 +25,7 @@
 from distutils.core import setup
 
 setup(
-        name='Harvest',
+        name='twitter-harvest',
         version='0.1',
         description='Twitter User Timeline Harvest',
         author='The MongoLab Team',
