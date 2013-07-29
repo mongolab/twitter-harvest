@@ -1,7 +1,7 @@
 Twitter-Harvest
 ====================
 
-Twitter-Harvest is a Twitter [User Timeline](https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline) harvesting tool that allows the user to download statuses (tweets) in the form of JSON objects and stores them into a MongoLab database.  You must provide a connection URI for your database.
+Twitter-Harvest is a Twitter [User Timeline](https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline) harvesting tool that allows the user to download statuses (tweets) in the form of JSON objects and stores them into a MongoLab database.  This script will terminate when either you have harvested all the tweets from the user's timeline (hit duplicates), or hit Twitter's max API allotment of 3200 tweets.
 
 Compatible with Python 2.7.x, you must also have Twitter Auth Credentials (detailed below).
 
@@ -15,6 +15,8 @@ Run:
 
     python setup.py install
     
+*setup.py uses setuptools!
+
 ###Harvest###
 
 Run:
