@@ -47,7 +47,7 @@ def oauth_header(url, consumer, token):
 def main():
     
     ### Build arg parser
-    parser = argparse.ArgumentParser(description = 'Twitter User Timeline Harvest')
+    parser = argparse.ArgumentParser(description = 'Connects to Twitter User Timeline endpoint, retrieves tweets and inserts into a MongoLab database. Developed on Python 2.7')
     parser.add_argument('-r', '--retweet', help = 'include native retweets in the harvest', action = 'store_true')
     parser.add_argument('-d', '--display', help = 'print harvested tweets in shell.', action = 'store_true')
     parser.add_argument('--numtweets', help = 'set total number of tweets to be harvested. max = 3200', type = int, default = 3200)
@@ -110,7 +110,6 @@ def main():
 		if len(tweets) == 1:
 		    print 'No more tweets to harvest!'
 		    sys.exit()    
-	### Set up next harvest
 	url = base_url + "&max_id=" + max_id
 
 if __name__ == '__main__':
