@@ -33,6 +33,6 @@ setup(
         url='https://github.com/c2chang/twitter-harvest',
 	license = 'MIT',
 	packages = ['twitter-harvest'],
-        install_requires=['pymongo','oauth2','httplib2']
+        install_requires=['pymongo','oauth2','httplib2', 'dargparse']
     )
 
