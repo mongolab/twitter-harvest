@@ -31,7 +31,7 @@ Run:
 
 -d          print in stdout all the tweets being harvested (default = False)
 
---numtweets total number of tweets to be harvested (max 3200)
+--numtweets total number of tweets to be harvested (max = 3200)
 
 --user      user's timeline you would like to harvest. must be public or already following. (default = mongolab)
 
