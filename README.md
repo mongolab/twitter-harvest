@@ -29,7 +29,7 @@ Run:
 
 -r          include native retweets in harvest (default = False)
 
--d          print in stdout all the tweets being harvested (default = False)
+-v          print in stdout all the tweets being harvested (default = False)
 
 --numtweets total number of tweets to be harvested (max = 3200)
 
@@ -74,7 +74,7 @@ For those unfamiliar with the Twitter Dev/App page, here are instructions for ge
 PyMongo
 ---------
 
-Twitter-Harvest uses the save (upsert) method for handling documents. PyMongo documentation for upserts [here](http://api.mongodb.org/python/current/api/pymongo/collection.html). For those unfamiliar with upserts, MongoDB upsert documentation [here](http://docs.mongodb.org/manual/core/update/#update-operations-with-the-upsert-flag).
+Twitter-Harvest uses the update (upsert) method for handling documents. PyMongo documentation for upserts [here](http://api.mongodb.org/python/current/api/pymongo/collection.html). For those unfamiliar with upserts, MongoDB upsert documentation [here](http://docs.mongodb.org/manual/core/update/#update-operations-with-the-upsert-flag).
 
 
 Contact
