@@ -79,7 +79,7 @@ def main():
     uri_parts = pymongo.uri_parser.parse_uri(URI)
     db_name = uri_parts['database']
     db = conn[db_name]
-    db['twitter-harvest'].ensure_index("id_str", unique = True)
+    db['twitter-harvest'].ensure_index("id_str")
   
     ### Helper Variables for Harvest
     max_id = -1
@@ -101,6 +101,7 @@ def main():
 	else:
 	    tweets = tweet_list[1:]
 	    if len(tweets) == 0:
+		print 'Finished Harvest!'
 	        return
 	
 	for tweet in tweets:
@@ -109,10 +110,10 @@ def main():
 		if tweet_count == numtweets:
 		   print 'Hit numtweets!' 
 		   return 
-		if verbose == True:
-		    print tweet["text"]
-		db['twitter-harvest'].save(tweet)
+		db['twitter-harvest'].update({"id_str":id_str},tweet,upsert = True)
 		tweet_count+=1
+		if verbose == True:
+		   print tweet["text"]
 	    except Exception:
                 print 'Unexpected error encountered'
 		return    
