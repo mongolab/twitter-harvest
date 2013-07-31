@@ -37,7 +37,7 @@ Run:
 
 ### Help Contents ###
 ```
-usage: twitter-harvest.py [-h] [-r] [-d] [--numtweets NUMTWEETS] [--user USER]
+usage: twitter-harvest.py [-h] [-r] [-v] [--numtweets NUMTWEETS] [--user USER]
                           --db DB --consumer-key CONSUMER_KEY
                           --consumer-secret CONSUMER_SECRET 
                           --access-token ACCESS_TOKEN 
@@ -49,7 +49,7 @@ a MongoLab database. Developed on Python 2.7
 optional arguments:
   -h, --help                        show this help message and exit
   -r, --retweet                     include native retweets in the harvest
-  -d, --display                     print harvested tweets in shell.
+  -v, --verbose                     print harvested tweets in shell
   --numtweets NUMTWEETS             set total number of tweets to be harvested. max = 3200
   --user USER                       choose user timeline for harvest
   --db DB                           MongoLab DB URI, example: mongodb://dbuser:dbpassword@dbh85.mongolab.com:port/dbname
