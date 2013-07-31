@@ -1,9 +1,9 @@
 Twitter-Harvest
 ====================
 
-Twitter-Harvest is a Twitter [User Timeline](https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline) harvesting tool that allows the user to download statuses (tweets) in the form of JSON objects and stores them into a MongoLab database.  This script will terminate when either you have harvested all the tweets from the user's timeline (hit duplicates), or hit Twitter's max API allotment of 3200 tweets.
+Twitter-Harvest is a Twitter [User Timeline](https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline)  tool that allows the user to download statuses (tweets) from user timelines as JSON objects and stores them into a MongoLab database.  This script will terminate when either you have harvested all the tweets from the user's timeline (hit duplicates), or hit Twitter's max API allotment of 3200 tweets.
 
-Compatible with Python 2.7.x, you must also have Twitter Auth Credentials (detailed below).
+Developed on Python 2.7.x, you must also have Twitter Auth Credentials (detailed below).
 
 
 Usage
@@ -15,7 +15,7 @@ Run:
 
     python setup.py install
     
-*setup.py uses setuptools!
+* setup.py uses setuptools!
 
 ###Harvest###
 
@@ -23,34 +23,41 @@ Run:
 
     python harvest.py --uri mongolab-uri --consumer-key consumer-key --consumer-secret consumer-secret --access-token access-token --access-secret access-secret
     
-The uri, consumer-key, consumer-secret, access-token and access-secret arguments are required.
+* The uri, consumer-key, consumer-secret, access-token and access-secret arguments are required.
 
 ###Other Useful Options###
 
--c sets the count or number of tweets to be returned per request (max 200 per request, default = 200)
+-r          include native retweets in harvest (default = False)
 
--u chooses the username timeline that you would like to harvest (default = mongolab)
+-d          print in stdout all the tweets being harvested (default = False)
 
--r sets whether you would like retweets included in the results (default = true)
+--numtweets total number of tweets to be harvested (max = 3200)
 
-###Help Contents###
+--user      user's timeline you would like to harvest. must be public or already following. (default = mongolab)
 
-    usage: harvest.py [-h] [-c C] [-u U] [-r R] --uri URI 
-                      --consumer-key CONSUMER_KEY --consumer-secret CONSUMER_SECRET
-                      --access-token ACCESS_TOKEN --access-secret ACCESS_SECRET
-    
-    Twitter User Timeline Harvest
-    
-    optional arguments:
-    -h, --help                          show this help message and exit
-    -c C                                sets the count or number of tweets to be returned per request. max = 200
-    -u U                                choose username timeline you are interested in harvesting. no @ symbol
-    -r R                                set whether you want retweets (true) or only self tweets (false)
-    --uri URI                           MongoLab URI, example: mongodb://dbuser:dbpassword@dbh85.mongolab.com:port/dbname
-    --consumer-key    CONSUMER_KEY      Consumer Key from your Twitter App OAuth settings
-    --consumer-secret CONSUMER_SECRET   Consumer Secret from your Twitter App OAuth settings
-    --access-token    ACCESS_TOKEN      Access Token from your Twitter App OAuth settings
-    --access-secret   ACCESS_SECRET     Access Token Secret from your Twitter App Dev Credentials
+### Help Contents ###
+```
+usage: twitter-harvest.py [-h] [-r] [-d] [--numtweets NUMTWEETS] [--user USER]
+                          --db DB --consumer-key CONSUMER_KEY
+                          --consumer-secret CONSUMER_SECRET 
+                          --access-token ACCESS_TOKEN 
+                          --access-secret ACCESS_SECRET
+
+Connects to Twitter User Timeline endpoint, retrieves tweets and inserts into
+a MongoLab database. Developed on Python 2.7
+
+optional arguments:
+  -h, --help                        show this help message and exit
+  -r, --retweet                     include native retweets in the harvest
+  -d, --display                     print harvested tweets in shell.
+  --numtweets NUMTWEETS             set total number of tweets to be harvested. max = 3200
+  --user USER                       choose user timeline for harvest
+  --db DB                           MongoLab DB URI, example: mongodb://dbuser:dbpassword@dbh85.mongolab.com:port/dbname
+  --consumer-key CONSUMER_KEY       Consumer Key from your Twitter App OAuth settings
+  --consumer-secret CONSUMER_SECRET Consumer Secret from your Twitter App OAuth settings
+  --access-token ACCESS_TOKEN       Access Token from your Twitter App OAuth settings
+  --access-secret ACCESS_SECRET     Access Token Secret from your Twitter App Dev Credentials
+```
 
 Twitter App Setup
 -----------------
@@ -73,4 +80,4 @@ Twitter-Harvest uses the save (upsert) method for handling documents. PyMongo do
 Contact
 -------
 
-Feel free to contact me via twitter [@c2kc](https://twitter.com/c2kc) or email <chang.christopher@gmail.com> if you have any questions or comments!
+Feel free to contact me via twitter [@c2kc](https://twitter.com/c2kc) or email <chris@mongolab.com> if you have any questions or comments!
