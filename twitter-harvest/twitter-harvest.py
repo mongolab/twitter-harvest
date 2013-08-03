@@ -74,11 +74,10 @@ def main():
     oauth_token = oauth.Token(key = ACCESS_TOKEN, secret = ACCESS_SECRET)
  
     ### Setup MongoLab Goodness
-    URI = args.db 
-    conn = pymongo.MongoClient(URI)
-    uri_parts = pymongo.uri_parser.parse_uri(URI)
-    db_name = uri_parts['database']
-    db = conn[db_name]
+    uri = args.db 
+    conn = pymongo.MongoClient(uri)
+    uri_parts = pymongo.uri_parser.parse_uri(uri)
+    db = conn[uri_parts['database']]
     db['twitter-harvest'].ensure_index("id_str")
   
     ### Helper Variables for Harvest
