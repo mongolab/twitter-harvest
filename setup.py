@@ -29,8 +29,8 @@ setup(
         version='0.1',
         description='Twitter User Timeline Harvest',
         author='The MongoLab Team',
-        author_email='team@mongolab.com',
-        url='https://github.com/c2chang/twitter-harvest',
+        author_email='support@mongolab.com',
+        url='https://github.com/mongolab/twitter-harvest',
 	license = 'MIT',
 	packages = ['twitter-harvest'],
         install_requires=['pymongo','oauth2','httplib2', 'dargparse']
