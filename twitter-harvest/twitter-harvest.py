@@ -68,7 +68,7 @@ def main():
     ACCESS_SECRET = args.access_secret
 
     ### Build Endpoint + Set Headers
-    base_url = url = "https://api.twitter.com/1.1/statuses/user_timeline.json?include_entities=true&count=200&screen_name=%s&include_rts=%s" % (user, retweet)
+    base_url = url = 'https://api.twitter.com/1.1/statuses/user_timeline.json?include_entities=true&count=200&screen_name=%s&include_rts=%s' % (user, retweet)
     oauth_consumer = oauth.Consumer(key = CONSUMER_KEY, secret = CONSUMER_SECRET)
     oauth_token = oauth.Token(key = ACCESS_TOKEN, secret = ACCESS_SECRET)
 
@@ -77,7 +77,7 @@ def main():
     conn = pymongo.MongoClient(uri)
     uri_parts = pymongo.uri_parser.parse_uri(uri)
     db = conn[uri_parts['database']]
-    db['twitter-harvest'].ensure_index("id_str")
+    db['twitter-harvest'].ensure_index('id_str')
 
     ### Helper Variables for Harvest
     max_id = -1
@@ -88,7 +88,15 @@ def main():
         auth = oauth_header(url, oauth_consumer, oauth_token)
         headers = {"Authorization": auth}
         request = urllib2.Request(url, headers = headers)
-        stream = urllib2.urlopen(request)
+        try:
+            stream = urllib2.urlopen(request)
+        except urllib2.HTTPError, err:
+            if err.code == 404:
+                print 'Error: Unknown user. Check --user arg'
+                return
+            if err.code == 401:
+                print 'Error: Unauthorized. Check Twitter credentials'
+                return
         tweet_list = json.load(stream)
 
         if len(tweet_list) == 0:
@@ -106,19 +114,19 @@ def main():
                 return
 
         for tweet in tweets:
-            max_id = id_str = tweet["id_str"]
+            max_id = id_str = tweet['id_str']
             try:
                 if tweet_count == numtweets:
                     print 'Hit numtweets!' 
                     return 
-                db['twitter-harvest'].update({"id_str":id_str},tweet,upsert = True)
+                db['twitter-harvest'].update({'id_str':id_str},tweet,upsert = True)
                 tweet_count+=1
                 if verbose == True:
-                    print tweet["text"]
+                    print tweet['text']
             except Exception:
                 print 'Unexpected error encountered'
                 return    
-        url = base_url + "&max_id=" + max_id
+        url = base_url + '&max_id=' + max_id
 
 if __name__ == '__main__':
     try:
