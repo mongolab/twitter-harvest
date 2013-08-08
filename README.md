@@ -21,9 +21,9 @@ Run:
 
 Run:
 
-    python twitter-harvest.py --db mongodb-uri --consumer-key consumer-key --consumer-secret consumer-secret --access-token access-token --access-secret access-secret
+    python twitter-harvest.py --consumer-key consumer-key --consumer-secret consumer-secret --access-token access-token --access-secret access-secret --db mongodb-uri
     
-* The db, consumer-key, consumer-secret, access-token and access-secret arguments are required.
+* The consumer-key, consumer-secret, access-token and access-secret arguments are required.
 
 ###Other Useful Options###
 
@@ -47,16 +47,16 @@ Connects to Twitter User Timeline endpoint, retrieves tweets and inserts into
 a MongoDB database. Developed on Python 2.7
 
 optional arguments:
-  -h, --help                        show this help message and exit
-  -r, --retweet                     include native retweets in the harvest
-  -v, --verbose                     print harvested tweets in shell
-  --numtweets NUMTWEETS             set total number of tweets to be harvested, max = 3200
-  --user USER                       choose user timeline for harvest
-  --db DB                           MongoDB URI, example: mongodb://dbuser:dbpassword@dbhnn.mongolab.com:port/dbname
-  --consumer-key CONSUMER_KEY       Consumer Key from your Twitter App OAuth settings
-  --consumer-secret CONSUMER_SECRET Consumer Secret from your Twitter App OAuth settings
-  --access-token ACCESS_TOKEN       Access Token from your Twitter App OAuth settings
-  --access-secret ACCESS_SECRET     Access Token Secret from your Twitter App Dev Credentials
+  -h, --help                          show this help message and exit
+  -r, --retweet                       include native retweets in the harvest
+  -v, --verbose                       print harvested tweets in shell
+  --numtweets NUMTWEETS               set total number of tweets to be harvested, max = 3200
+  --user USER                         choose user timeline for harvest
+  --db DB                             MongoDB URI, example: mongodb://dbuser:dbpassword@dbhnn.mongolab.com:port/dbname
+  --consumer-key CONSUMER_KEY         Consumer Key from your Twitter App OAuth settings
+  --consumer-secret CONSUMER_SECRET   Consumer Secret from your Twitter App OAuth settings
+  --access-token ACCESS_TOKEN         Access Token from your Twitter App OAuth settings
+  --access-secret ACCESS_SECRET       Access Token Secret from your Twitter App Dev Credentials
 ```
 
 Twitter App Setup
