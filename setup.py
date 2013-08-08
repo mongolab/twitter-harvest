@@ -32,7 +32,6 @@ setup(
         author_email='support@mongolab.com',
         url='https://github.com/mongolab/twitter-harvest',
 	license = 'MIT',
-	packages = ['twitter-harvest'],
-        install_requires=['pymongo','oauth2','httplib2', 'dargparse']
+        install_requires=['pymongo','oauth2','httplib2','argparse']
     )
 
