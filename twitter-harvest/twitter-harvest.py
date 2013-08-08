@@ -48,7 +48,7 @@ def main():
     parser.add_argument('-v', '--verbose', help = 'print harvested tweets in shell', action = 'store_true')
     parser.add_argument('--numtweets', help = 'set total number of tweets to be harvested, max = 3200', type = int, default = 3200)
     parser.add_argument('--user', help = 'choose twitter user timeline for harvest', default = 'mongolab')
-    parser.add_argument('--db', help = 'MongoDB URI, example: mongodb://dbuser:dbpassword@dbhnn.mongolab.com:port/dbname', required = True)
+    parser.add_argument('--db', help = 'MongoDB URI, example: mongodb://dbuser:dbpassword@dbhnn.mongolab.com:port/dbname')
     parser.add_argument('--consumer-key', help = 'Consumer Key from your Twitter App OAuth settings', required = True)
     parser.add_argument('--consumer-secret', help = 'Consumer Secret from your Twitter App OAuth settings', required = True)
     parser.add_argument('--access-token', help = 'Access Token from your Twitter App OAuth settings', required = True)
@@ -73,11 +73,17 @@ def main():
     oauth_token = oauth.Token(key = ACCESS_TOKEN, secret = ACCESS_SECRET)
 
     ### Setup MongoLab Goodness
-    uri = args.db 
-    conn = pymongo.MongoClient(uri)
-    uri_parts = pymongo.uri_parser.parse_uri(uri)
-    db = conn[uri_parts['database']]
-    db['twitter-harvest'].ensure_index('id_str')
+    uri = args.db
+    if uri != None:
+        try: 
+            conn = pymongo.MongoClient(uri)
+            print 'Harvesting...'
+        except:
+            print 'Error: Unable to connect to DB. Check --db arg'
+            return
+        uri_parts = pymongo.uri_parser.parse_uri(uri)
+        db = conn[uri_parts['database']]
+        db['twitter-harvest'].ensure_index('id_str')
 
     ### Helper Variables for Harvest
     max_id = -1
@@ -117,14 +123,17 @@ def main():
             max_id = id_str = tweet['id_str']
             try:
                 if tweet_count == numtweets:
-                    print 'Hit numtweets!' 
+                    print 'Finished Harvest- hit numtweets!' 
                     return 
-                db['twitter-harvest'].update({'id_str':id_str},tweet,upsert = True)
-                tweet_count+=1
-                if verbose == True:
+                if uri != None:
+                    db[user].update({'id_str':id_str},tweet,upsert = True)
+                else:
                     print tweet['text']
-            except Exception:
-                print 'Unexpected error encountered'
+                tweet_count+=1
+                if verbose == True and uri != None:
+                    print tweet['text']
+            except Exception, err:
+                print 'Unexpected error encountered: %s' %(err)
                 return    
         url = base_url + '&max_id=' + max_id
 
