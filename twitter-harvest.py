@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2015 ObjectLabs Corporation
+# Copyright (c) 2016 ObjectLabs Corporation
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -83,7 +83,7 @@ def main():
             return
         uri_parts = pymongo.uri_parser.parse_uri(uri)
         db = conn[uri_parts['database']]
-        db['twitter-harvest'].ensure_index('id_str')
+        db[user].ensure_index('id_str')
 
     ### Helper Variables for Harvest
     max_id = -1
